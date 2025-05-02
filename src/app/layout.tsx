@@ -2,18 +2,20 @@ import type { Metadata } from 'next';
 import { Inter, Montserrat } from 'next/font/google';
 
 import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
+import Header from '@/components/Header';
 
 import './globals.css';
 
 const montserrat = Montserrat({
-  variable: '--font-montserrat',
   subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-montserrat',
 });
 
 const inter = Inter({
-  variable: '--font-inter',
   subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
@@ -21,13 +23,11 @@ export const metadata: Metadata = {
   description:
     'Generate viral, SEO-friendly captions and hashtags for your images using AI in one-click.',
   keywords: [
-    'AI',
     'caption generator',
-    'social media',
-    'hashtags',
-    'image captioning',
-    'SEO',
-    'viral content',
+    'social media captions',
+    'AI caption tool',
+    'hashtag generator',
+    'content marketing',
   ],
   openGraph: {
     title: 'CaptionForge AI',
@@ -61,10 +61,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${montserrat.variable} ${inter.variable} antialiased`}>
-        <Navbar />
-        {children}
+    <html lang="en" className={`${montserrat.variable} ${inter.variable} antialiased`}>
+      <body className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-grow">{children}</main>
         <Footer />
       </body>
     </html>
