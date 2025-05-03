@@ -167,10 +167,6 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  color: var(--primary-dark);
-}
-
 /* Button System */
 .btn {
   @apply relative inline-flex items-center justify-center overflow-hidden rounded-lg px-6 py-2.5 font-medium transition-all duration-200;
