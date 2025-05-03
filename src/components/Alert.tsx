@@ -25,15 +25,15 @@ export default function Alert({ type, message, duration = 5000, onClose }: Alert
   const getAlertStyles = () => {
     switch (type) {
       case 'success':
-        return 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-800 dark:text-green-200';
+        return 'alert-success';
       case 'error':
-        return 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-800 dark:text-red-200';
+        return 'alert-error';
       case 'warning':
-        return 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200';
+        return 'alert-warning';
       case 'info':
-        return 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200';
+        return 'alert-info';
       default:
-        return 'bg-slate-50 dark:bg-slate-900/20 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200';
+        return 'border border-[var(--border)] bg-[var(--background)]/50 text-[var(--foreground)]';
     }
   };
 
@@ -51,25 +51,28 @@ export default function Alert({ type, message, duration = 5000, onClose }: Alert
   };
 
   return (
-    <div
-      className={`fixed top-4 right-4 z-50 max-w-md w-full p-4 rounded-lg border shadow-md flex items-start ${getAlertStyles()}`}
-    >
-      <div className="flex-shrink-0 mr-3">{getIcon()}</div>
-
-      <div className="flex-1 mr-2">
-        <p className="text-sm font-medium">{message}</p>
-      </div>
-
-      <button
-        type="button"
-        className="flex-shrink-0 ml-auto -mx-1.5 -my-1.5 rounded-lg p-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900"
-        onClick={() => {
-          setIsVisible(false);
-          if (onClose) onClose();
-        }}
+    <div className="fixed top-4 z-50 flex w-full justify-center px-4 sm:justify-end sm:px-6 md:px-0">
+      <div
+        className={`bounce-in flex w-full max-w-[calc(100vw-32px)] items-start rounded-lg p-3 shadow-md sm:max-w-md sm:p-4 ${getAlertStyles()}`}
+        style={{ boxShadow: 'var(--shadow-md)' }}
       >
-        <FiX className="h-4 w-4" />
-      </button>
+        <div className="mr-2 flex-shrink-0 sm:mr-3">{getIcon()}</div>
+
+        <div className="mr-2 flex-1">
+          <p className="text-sm font-medium break-words">{message}</p>
+        </div>
+
+        <button
+          type="button"
+          className="ml-auto flex-shrink-0 rounded-full p-1.5 transition-all duration-200 hover:bg-black/10 focus:ring-2 focus:ring-[var(--ring)] focus:outline-none dark:hover:bg-white/10"
+          onClick={() => {
+            setIsVisible(false);
+            if (onClose) onClose();
+          }}
+        >
+          <FiX className="h-4 w-4" />
+        </button>
+      </div>
     </div>
   );
 }
