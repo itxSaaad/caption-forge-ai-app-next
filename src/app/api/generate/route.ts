@@ -117,86 +117,43 @@ export async function POST(request: NextRequest) {
     // Parse the response to extract caption and hashtags
     const content = response.choices[0]?.message?.content || '';
 
-    const captionSets: CaptionSet[] = [];
+    // 1. Grab all five option blocks with a single regex
+    const blocks = Array.from(
+      content.matchAll(/Option\s+([1-5]):([\s\S]*?)(?=(?:Option\s+[1-5]:)|$)/g)
+    );
 
-    // Extract each option with its hashtags using regex
-    for (let i = 1; i <= 5; i++) {
-      try {
-        const optionRegex = new RegExp(`Option ${i}:(.*?)(?=Hashtags ${i}:|$)`, 's');
-        const hashtagsRegex = new RegExp(`Hashtags ${i}:(.*?)(?=Option ${i + 1}:|$)`, 's');
+    // 2. Map each to a CaptionSet
+    const captionSets: CaptionSet[] = blocks.map(match => {
+      const [, , blockText] = match;
 
-        const captionMatch = content.match(optionRegex);
-        const hashtagsMatch = content.match(hashtagsRegex);
+      // Check if there's a specific hashtags section
+      const hasHashtagSection = /Hashtags\s*\d*:/i.test(blockText);
 
-        if (captionMatch) {
-          // Get the caption and remove any leading markdown formatting characters
-          const caption = captionMatch[1].trim().replace(/^\*\*\s*/, '');
-          let hashtags: string[] = [];
-
-          if (hashtagsMatch) {
-            const hashtagText = hashtagsMatch[1].trim();
-            hashtags = hashtagText
-              .split(/\s+/)
-              .filter(tag => tag.startsWith('#'))
-              .map(tag => tag.trim());
-          }
-
-          // If no explicit hashtags were found, try to extract them from the caption
-          if (hashtags.length === 0) {
-            hashtags = caption
-              .split(/\s+/)
-              .filter(word => word.startsWith('#'))
-              .map(tag => tag.trim());
-          }
-
-          captionSets.push({ caption, hashtags });
-        }
-      } catch (err) {
-        console.warn(`Failed to parse Option ${i}:`, err);
-      }
-    }
-
-    // Fallback if structured parsing fails
-    if (captionSets.length === 0) {
-      // Just split the content into 5 roughly equal parts as a fallback
-      const parts = content
-        .split(/Option \d+:|Caption \d+:/i)
-        .filter(part => part.trim().length > 0);
-
-      for (let i = 0; i < Math.min(parts.length, 5); i++) {
-        const text = parts[i].trim();
-        const hashtags = text
+      if (hasHashtagSection) {
+        // Split by hashtag section if it exists
+        const [captionPart, hashtagPart = ''] = blockText.split(/Hashtags\s*\d*:/i, 2);
+        const caption = captionPart.trim().replace(/^[""'']+|[""'']+$/g, '');
+        const hashtags = hashtagPart
           .split(/\s+/)
-          .filter(word => word.startsWith('#'))
-          .map(tag => tag.trim());
-
-        const caption = text.split(/Hashtags \d+:|Hashtags:/i)[0].trim();
-
-        captionSets.push({
-          caption: caption.replace(/#\w+/g, '').trim(),
-          hashtags,
-        });
-      }
-    }
-
-    // If we still don't have 5 captions, fill in the missing ones
-    while (captionSets.length < 5) {
-      if (captionSets.length > 0) {
-        // Create variations of existing captions
-        const originalCaption = captionSets[0].caption;
-        const originalHashtags = captionSets[0].hashtags;
-
-        captionSets.push({
-          caption: `Alternative version of caption: ${originalCaption}`,
-          hashtags: originalHashtags,
-        });
+          .filter(w => w.startsWith('#'))
+          .map(w => w.trim());
+        return { caption, hashtags };
       } else {
-        // Last resort fallback
-        captionSets.push({
-          caption: `Engaging caption for your ${description} image.`,
-          hashtags: ['#content', '#socialmedia'],
-        });
+        // Extract hashtags from caption if no dedicated hashtag section
+        const fullText = blockText.trim().replace(/^[""'']+|[""'']+$/g, '');
+        const hashtags = fullText.match(/#\w+/g) || [];
+        const caption = fullText.replace(/#\w+/g, '').trim();
+        return { caption, hashtags };
       }
+    });
+
+    // 3. Fill missing options if needed
+    while (captionSets.length < 5) {
+      const n = captionSets.length + 1;
+      captionSets.push({
+        caption: `Auto-generated caption for Option ${n}`,
+        hashtags: ['#social', '#AI'],
+      });
     }
 
     // Set cookie to track usage

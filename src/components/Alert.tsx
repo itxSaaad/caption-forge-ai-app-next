@@ -51,7 +51,7 @@ export default function Alert({ type, message, duration = 5000, onClose }: Alert
   };
 
   return (
-    <div className="fixed top-4 z-50 flex w-full justify-center px-4 sm:justify-end sm:px-6 md:px-0">
+    <div className="fixed top-4 right-4 z-50 flex w-full justify-center px-4 sm:justify-end sm:px-6 md:px-0">
       <div
         className={`bounce-in flex w-full max-w-[calc(100vw-32px)] items-start rounded-lg p-3 shadow-md sm:max-w-md sm:p-4 ${getAlertStyles()}`}
         style={{ boxShadow: 'var(--shadow-md)' }}
