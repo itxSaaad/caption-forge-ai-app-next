@@ -21,26 +21,31 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'CaptionForge - AI Social Media Caption Generator',
   description:
-    'Generate viral, SEO-friendly captions and hashtags for your images using AI in one-click.',
+    'Generate engaging, SEO-friendly captions and trending hashtags for your social media posts in seconds. Powered by advanced AI technology.',
   keywords: [
-    'caption generator',
+    'AI caption generator',
     'social media captions',
-    'AI caption tool',
     'hashtag generator',
+    'SEO captions',
+    'viral captions',
     'content marketing',
+    'Instagram captions',
+    'Twitter captions',
+    'Facebook captions',
+    'CaptionForge',
   ],
   openGraph: {
-    title: 'CaptionForge AI',
+    title: 'CaptionForge - AI Social Media Caption Generator',
     description:
-      'Generate viral, SEO-friendly captions and hashtags from your images using AI in one-click.',
-    url: 'https://caption-forge-ai.vercel.app',
-    siteName: 'CaptionForge AI',
+      'Generate engaging, SEO-friendly captions and trending hashtags for your social media posts in seconds. Powered by advanced AI technology.',
+    url: 'https://caption-forge-ai.vercel.app/',
+    siteName: 'CaptionForge',
     images: [
       {
         url: 'https://caption-forge-ai.vercel.app/opengraph-image.png',
         width: 1200,
         height: 630,
-        alt: 'CaptionForge AI',
+        alt: 'CaptionForge AI - Social Media Caption Generator',
       },
     ],
     locale: 'en_US',
@@ -48,9 +53,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CaptionForge AI',
+    title: 'CaptionForge - AI Social Media Caption Generator',
     description:
-      'Generate viral, SEO-friendly captions and hashtags from your images using AI in one-click.',
+      'Generate engaging, SEO-friendly captions and trending hashtags for your social media posts in seconds. Powered by advanced AI technology.',
     images: ['https://caption-forge-ai.vercel.app/twitter-image.png'],
   },
 };
@@ -62,7 +67,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${montserrat.variable} ${inter.variable} antialiased`}>
-      <body className="flex flex-col min-h-screen">
+      <body>
         <Header />
         <main className="flex-grow">{children}</main>
         <Footer />

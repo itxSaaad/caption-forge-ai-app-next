@@ -1,19 +1,25 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Generate Caption - CaptionForge AI',
+  title: 'Generate Captions & Hashtags - CaptionForge AI',
   description:
-    'Generate viral, SEO-friendly captions and hashtags for your videos with CaptionForge AI',
+    'Upload your image and let CaptionForge AI generate viral, SEO-friendly captions and trending hashtags tailored to your content. Perfect for Instagram, Twitter, LinkedIn, and more.',
   keywords: [
-    'video caption generator',
-    'social media video captions',
-    'AI video caption tool',
-    'video content marketing',
+    'generate captions',
+    'AI hashtag generator',
+    'caption tool',
+    'social media tool',
+    'Instagram caption generator',
+    'AI content writer',
+    'trending hashtags',
+    'SEO captions',
+    'caption AI',
+    'caption generator',
   ],
   openGraph: {
-    title: 'Generate Caption - CaptionForge AI',
+    title: 'Generate Captions & Hashtags - CaptionForge AI',
     description:
-      'Generate viral, SEO-friendly captions and hashtags for your videos with CaptionForge AI',
+      'Upload your image and let CaptionForge AI generate viral, SEO-friendly captions and trending hashtags tailored to your content.',
     url: 'https://caption-forge-ai.vercel.app/generate-caption',
     siteName: 'CaptionForge AI',
     images: [
@@ -21,7 +27,7 @@ export const metadata: Metadata = {
         url: 'https://caption-forge-ai.vercel.app/generate-caption/opengraph-image.png',
         width: 1200,
         height: 630,
-        alt: 'CaptionForge AI Caption Generator',
+        alt: 'CaptionForge AI - Generate Captions & Hashtags',
       },
     ],
     locale: 'en_US',
@@ -29,10 +35,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Generate Caption - CaptionForge AI',
+    title: 'Generate Captions & Hashtags - CaptionForge AI',
     description:
-      'Generate viral, SEO-friendly captions and hashtags for your videos with CaptionForge AI',
+      'Upload your image and let CaptionForge AI generate viral, SEO-friendly captions and trending hashtags tailored to your content.',
     images: ['https://caption-forge-ai.vercel.app/generate-caption/twitter-image.png'],
+  },
+  alternates: {
+    canonical: 'https://caption-forge-ai.vercel.app/generate-caption',
   },
 };
 
@@ -41,5 +50,5 @@ export default function GenerateCaptionLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <section className="container mx-auto px-4 py-8">{children}</section>;
+  return <main className="flex-grow">{children}</main>;
 }
