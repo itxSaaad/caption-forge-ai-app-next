@@ -1,5 +1,18 @@
 # CaptionForge - AI-Powered Caption Generator
 
+## Architecture
+
+```mermaid
+flowchart LR
+  Creator[Content creator] -->|enter caption brief or upload image| UI[Next.js caption interface\nVercel deployment]
+  UI -->|Image and description| Generate[Next.js generate API route]
+  Generate -->|Vision prompt| AI[OpenAI-compatible caption API]
+  AI --> Generate
+  Generate --> UI
+  UI --> Usage[Usage check API and browser cookie]
+  Usage --> UI
+```
+
 > CaptionForge is a modern micro-SaaS web application that leverages advanced AI to generate viral, SEO-optimized captions and trending hashtags for your social media images in just one click. Perfect for content creators, marketers, and businesses who want to boost engagement and reach on platforms like Instagram, Twitter, and LinkedIn.
 
 <br/>
@@ -210,3 +223,7 @@ Give ⭐️ if you like this project!
 [issues-url]: https://github.com/itxsaaad/caption-forge-ai-app-next/issues
 [license-shield]: https://img.shields.io/github/license/itxsaaad/caption-forge-ai-app-next.svg?style=for-the-badge
 [license-url]: https://github.com/itxsaaad/caption-forge-ai-app-next/blob/main/LICENSE.md
+
+## Vercel Deployment
+Next.js application built from the repository root, including its server-side routes.
+See the repository-root [vercel.json](./vercel.json) for build roots and routing. Configure private values in Vercel Project Settings; never commit secrets.
